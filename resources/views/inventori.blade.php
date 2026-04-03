@@ -7,7 +7,7 @@
         <h1 class="text-2xl font-bold">Inventori Barang</h1>
         <p class="text-gray-500">Kelola stok barang dengan mudah</p>
     </div>
-    <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+    <button onclick="openModal()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
         + Tambah Barang
     </button>
 </div>
@@ -60,5 +60,33 @@ $barang = [
     </table>
 
 </div>
+
+<!-- Modal -->
+<div id="modal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center">
+    
+    <div class="bg-white p-6 rounded-lg w-96 shadow-lg">
+        <h2 class="text-xl font-bold mb-4">Tambah Barang</h2>
+
+        <input type="text" placeholder="Nama Barang" class="w-full border p-2 mb-3 rounded">
+        <input type="text" placeholder="Kategori" class="w-full border p-2 mb-3 rounded">
+        <input type="number" placeholder="Stok" class="w-full border p-2 mb-3 rounded">
+
+        <div class="flex justify-end gap-2">
+            <button onclick="closeModal()" class="px-3 py-2 bg-gray-300 rounded">Batal</button>
+            <button class="px-3 py-2 bg-blue-600 text-white rounded">Simpan</button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+function openModal() {
+    document.getElementById('modal').classList.remove('hidden');
+}
+
+function closeModal() {
+    document.getElementById('modal').classList.add('hidden');
+}
+</script>
 
 @endsection
