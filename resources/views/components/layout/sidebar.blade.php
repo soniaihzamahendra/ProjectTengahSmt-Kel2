@@ -13,7 +13,7 @@
     <nav class="flex-1 px-4 space-y-2 mt-4">
         <p class="text-[10px] font-bold text-indigo-500 uppercase tracking-[0.2em] px-4 mb-4">Dashboard & Apps</p>
         
-        <a href="/" class="flex items-center px-4 py-3.5 bg-white text-indigo-600 rounded-2xl transition-all shadow-sm border border-indigo-100">
+        <a href="/" class="flex items-center p-2 rounded-lg {{ request()->is('/') ? 'bg-white/60 text-blue-600' : '' }}">
             <div class="w-8 h-8 bg-indigo-500 rounded-xl flex items-center justify-center mr-3 shadow-md shadow-indigo-100">
                 <i class="fas fa-home text-white text-xs"></i>
             </div>
@@ -21,7 +21,7 @@
             <span class="ml-auto bg-red-500 text-white text-[10px] px-2 py-0.5 rounded-full font-bold">5</span>
         </a>
 
-        <a href="#" class="flex items-center px-4 py-3.5 text-indigo-600 hover:bg-white/60 hover:text-indigo-600 rounded-2xl transition-all group">
+        <a href="{{ url('/inventori') }}" class="flex items-center p-2 rounded-lg {{ request()->is('inventori') ? 'bg-white/60 text-blue-600' : '' }}">
             <div class="w-8 h-8 bg-white/50 rounded-xl flex items-center justify-center mr-3 group-hover:bg-white transition-all shadow-sm">
                 <i class="fas fa-box-open text-xs"></i>
             </div>
