@@ -79,6 +79,15 @@ function closeModal() {
 let dataBarang = [];
 let editIndex = null;
 
+window.onload = function () {
+    let data = localStorage.getItem('barang');
+
+    if (data) {
+        dataBarang = JSON.parse(data);
+        renderTable();
+    }
+};
+
 function renderTable() {
     let tbody = document.getElementById('table-body');
     tbody.innerHTML = '';
@@ -104,6 +113,8 @@ function renderTable() {
 
         tbody.innerHTML += row;
     });
+
+    localStorage.setItem('barang', JSON.stringify(dataBarang));
 }
 
 function tambahBarang() {
