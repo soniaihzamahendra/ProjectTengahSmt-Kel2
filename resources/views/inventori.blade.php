@@ -38,6 +38,7 @@ $barang = [
                 <th class="p-2">Kategori</th>
                 <th class="p-2">Stok</th>
                 <th class="p-2">Status</th>
+                <th class="p-2">Aksi</th>
             </tr>
         </thead>
         <tbody  id="table-body">
@@ -76,6 +77,7 @@ function closeModal() {
 
 <script>
 let dataBarang = [];
+let editIndex = null;
 
 function renderTable() {
     let tbody = document.getElementById('table-body');
@@ -93,6 +95,10 @@ function renderTable() {
                 <td class="p-2">${item.kategori}</td>
                 <td class="p-2">${item.stok}</td>
                 <td class="p-2">${status}</td>
+                <td class="p-2 flex gap-2">
+                    <button onclick="editBarang(${index})" class="bg-yellow-400 px-2 py-1 rounded text-white">Edit</button>
+                    <button onclick="hapusBarang(${index})" class="bg-red-500 px-2 py-1 rounded text-white">Hapus</button>
+                </td>
             </tr>
         `;
 
@@ -110,15 +116,37 @@ function tambahBarang() {
         return;
     }
 
-    dataBarang.push({ nama, kategori, stok });
+    if (editIndex !== null) {
+        dataBarang[editIndex] = { nama, kategori, stok };
+        editIndex = null;
+    } else {
+        dataBarang.push({ nama, kategori, stok });
+    }
 
     renderTable();
     closeModal();
 
-    // reset input
     document.getElementById('nama').value = '';
     document.getElementById('kategori').value = '';
     document.getElementById('stok').value = '';
+}
+
+function hapusBarang(index) {
+    if (confirm('Yakin mau hapus barang ini?')) {
+        dataBarang.splice(index, 1);
+        renderTable();
+    }
+}
+
+function editBarang(index) {
+    let item = dataBarang[index];
+
+    document.getElementById('nama').value = item.nama;
+    document.getElementById('kategori').value = item.kategori;
+    document.getElementById('stok').value = item.stok;
+
+    editIndex = index;
+    openModal();
 }
 </script>
 
