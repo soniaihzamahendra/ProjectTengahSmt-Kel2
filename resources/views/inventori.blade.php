@@ -25,8 +25,9 @@ $barang = [
 
     <!-- 🔍 Search -->
     <div class="mb-4">
-        <input type="text" placeholder="Cari barang..."
-            class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+        <input id="search" type="text" placeholder="Cari barang..."
+            onkeyup="cariBarang()"
+            class="w-full border rounded-lg px-3 py-2">
     </div>
 
     <!-- 📊 Table -->
@@ -158,6 +159,40 @@ function editBarang(index) {
 
     editIndex = index;
     openModal();
+}
+
+function cariBarang() {
+    let keyword = document.getElementById('search').value.toLowerCase();
+
+    let tbody = document.getElementById('table-body');
+    tbody.innerHTML = '';
+
+    dataBarang.forEach((item, index) => {
+        if (
+            item.nama.toLowerCase().includes(keyword) ||
+            item.kategori.toLowerCase().includes(keyword)
+        ) {
+            let status = item.stok > 10
+                ? '<span class="bg-green-100 text-green-600 px-2 py-1 rounded text-sm">Aman</span>'
+                : '<span class="bg-red-100 text-red-600 px-2 py-1 rounded text-sm">Menipis</span>';
+
+            let row = `
+                <tr class="border-b hover:bg-gray-50">
+                    <td class="p-2">${index + 1}</td>
+                    <td class="p-2 font-medium">${item.nama}</td>
+                    <td class="p-2">${item.kategori}</td>
+                    <td class="p-2">${item.stok}</td>
+                    <td class="p-2">${status}</td>
+                    <td class="p-2 flex gap-2">
+                        <button onclick="editBarang(${index})" class="bg-yellow-400 px-2 py-1 rounded text-white">Edit</button>
+                        <button onclick="hapusBarang(${index})" class="bg-red-500 px-2 py-1 rounded text-white">Hapus</button>
+                    </td>
+                </tr>
+            `;
+
+            tbody.innerHTML += row;
+        }
+    });
 }
 </script>
 
