@@ -40,22 +40,7 @@ $barang = [
                 <th class="p-2">Status</th>
             </tr>
         </thead>
-        <tbody>
-            @foreach($barang as $index => $item)
-            <tr class="border-b hover:bg-gray-50">
-                <td class="p-2">{{ $index + 1 }}</td>
-                <td class="p-2 font-medium">{{ $item['nama'] }}</td>
-                <td class="p-2">{{ $item['kategori'] }}</td>
-                <td class="p-2">{{ $item['stok'] }}</td>
-                <td class="p-2">
-                    @if($item['stok'] > 10)
-                        <span class="bg-green-100 text-green-600 px-2 py-1 rounded text-sm">Aman</span>
-                    @else
-                        <span class="bg-red-100 text-red-600 px-2 py-1 rounded text-sm">Menipis</span>
-                    @endif
-                </td>
-            </tr>
-            @endforeach
+        <tbody  id="table-body">
         </tbody>
     </table>
 
@@ -67,13 +52,13 @@ $barang = [
     <div class="bg-white p-6 rounded-lg w-96 shadow-lg">
         <h2 class="text-xl font-bold mb-4">Tambah Barang</h2>
 
-        <input type="text" placeholder="Nama Barang" class="w-full border p-2 mb-3 rounded">
-        <input type="text" placeholder="Kategori" class="w-full border p-2 mb-3 rounded">
-        <input type="number" placeholder="Stok" class="w-full border p-2 mb-3 rounded">
+        <input id="nama" type="text" placeholder="Nama Barang" class="w-full border p-2 mb-3 rounded">
+        <input id="kategori" type="text" placeholder="Kategori" class="w-full border p-2 mb-3 rounded">
+        <input id="stok" type="number" placeholder="Stok" class="w-full border p-2 mb-3 rounded">
 
         <div class="flex justify-end gap-2">
             <button onclick="closeModal()" class="px-3 py-2 bg-gray-300 rounded">Batal</button>
-            <button class="px-3 py-2 bg-blue-600 text-white rounded">Simpan</button>
+            <button onclick="tambahBarang()" class="px-3 py-2 bg-blue-600 text-white rounded">Simpan</button>
         </div>
     </div>
 
@@ -86,6 +71,54 @@ function openModal() {
 
 function closeModal() {
     document.getElementById('modal').classList.add('hidden');
+}
+</script>
+
+<script>
+let dataBarang = [];
+
+function renderTable() {
+    let tbody = document.getElementById('table-body');
+    tbody.innerHTML = '';
+
+    dataBarang.forEach((item, index) => {
+        let status = item.stok > 10
+            ? '<span class="bg-green-100 text-green-600 px-2 py-1 rounded text-sm">Aman</span>'
+            : '<span class="bg-red-100 text-red-600 px-2 py-1 rounded text-sm">Menipis</span>';
+
+        let row = `
+            <tr class="border-b hover:bg-gray-50">
+                <td class="p-2">${index + 1}</td>
+                <td class="p-2 font-medium">${item.nama}</td>
+                <td class="p-2">${item.kategori}</td>
+                <td class="p-2">${item.stok}</td>
+                <td class="p-2">${status}</td>
+            </tr>
+        `;
+
+        tbody.innerHTML += row;
+    });
+}
+
+function tambahBarang() {
+    let nama = document.getElementById('nama').value;
+    let kategori = document.getElementById('kategori').value;
+    let stok = parseInt(document.getElementById('stok').value);
+
+    if (!nama || !kategori || !stok) {
+        alert('Semua field harus diisi!');
+        return;
+    }
+
+    dataBarang.push({ nama, kategori, stok });
+
+    renderTable();
+    closeModal();
+
+    // reset input
+    document.getElementById('nama').value = '';
+    document.getElementById('kategori').value = '';
+    document.getElementById('stok').value = '';
 }
 </script>
 
