@@ -2,9 +2,14 @@
 
 @section('content')
 
-<div class="mb-6">
-    <h1 class="text-2xl font-bold">Inventori Barang</h1>
-    <p class="text-gray-500">Daftar stok barang yang tersedia</p>
+<div class="flex justify-between items-center mb-6">
+    <div>
+        <h1 class="text-2xl font-bold">Inventori Barang</h1>
+        <p class="text-gray-500">Kelola stok barang dengan mudah</p>
+    </div>
+    <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+        + Tambah Barang
+    </button>
 </div>
 
 @php
@@ -17,9 +22,17 @@ $barang = [
 @endphp
 
 <div class="bg-white shadow rounded-lg p-4">
+
+    <!-- 🔍 Search -->
+    <div class="mb-4">
+        <input type="text" placeholder="Cari barang..."
+            class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+    </div>
+
+    <!-- 📊 Table -->
     <table class="w-full text-left">
         <thead>
-            <tr class="border-b">
+            <tr class="border-b text-gray-600">
                 <th class="p-2">No</th>
                 <th class="p-2">Nama Barang</th>
                 <th class="p-2">Kategori</th>
@@ -31,20 +44,21 @@ $barang = [
             @foreach($barang as $index => $item)
             <tr class="border-b hover:bg-gray-50">
                 <td class="p-2">{{ $index + 1 }}</td>
-                <td class="p-2">{{ $item['nama'] }}</td>
+                <td class="p-2 font-medium">{{ $item['nama'] }}</td>
                 <td class="p-2">{{ $item['kategori'] }}</td>
                 <td class="p-2">{{ $item['stok'] }}</td>
                 <td class="p-2">
                     @if($item['stok'] > 10)
-                        <span class="text-green-600 font-semibold">Aman</span>
+                        <span class="bg-green-100 text-green-600 px-2 py-1 rounded text-sm">Aman</span>
                     @else
-                        <span class="text-red-600 font-semibold">Menipis</span>
+                        <span class="bg-red-100 text-red-600 px-2 py-1 rounded text-sm">Menipis</span>
                     @endif
                 </td>
             </tr>
             @endforeach
         </tbody>
     </table>
+
 </div>
 
 @endsection
